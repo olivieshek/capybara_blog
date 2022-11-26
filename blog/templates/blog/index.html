@@ -6,19 +6,25 @@ Blog Site
 {% endblock %}
 
 {% block body %}
-<h1>Vessel Blog</h1>
-{% for post in posts %}
-<article class="post-container">
-    <h2 class="post-title">
-        {{ post.title }}
-    </h2>
-    <p class="post-body">
-        {{ post.body }}
-    </p>
-    <img src="{% get_media_prefix %}{{ post.image }}" alt="нет изображения">
-    <p class="post-date-time">
-        {{ post.date }} ~ {{ post.time }}
-    </p>
-</article>
-{% endfor %}
+<h1 class="blog-title">Vessel Blog</h1>
+<section class="section section-posts">
+{% if posts %}
+    {% for post in posts %}
+        <article class="post-container">
+            <img class="post-image" src="{% get_media_prefix %}{{ post.image }}" alt="нет изображения">
+            <h2 class="post-title">
+                {{ post.title }}
+            </h2>
+            <p class="post-body">
+                {{ post.body }}
+            </p>
+            <p class="post-datetime">
+                {{ post.date }} ~ {{ post.time }}
+            </p>
+        </article>
+    {% endfor %}
+{% else %}
+    <p class="no-posts">На данный момент нет никаких публикаций.</p>
+{% endif %}
+</section>
 {% endblock %}
