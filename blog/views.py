@@ -3,7 +3,7 @@ from .models import Post
 
 
 def index(request):
-    posts = Post.objects.all().order_by("-date", "-time")
+    posts = Post.objects.all().order_by("date", "time")
     return render(
         request,
         "blog/index.html",
