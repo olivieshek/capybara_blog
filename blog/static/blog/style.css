@@ -45,3 +45,8 @@ body {
 .post-datetime {
     font-style: italic;
 }
+
+.add-post {
+    text-align: center;
+    text-size: 200px;
+}
