@@ -43,3 +43,4 @@ def add_post(request):
 def delete_post(request, id):
     Post.objects.filter(id=id).delete(id)
     return HttpResponseRedirect(reverse("blog:delete_post"))
+
