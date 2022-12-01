@@ -1,0 +1,14 @@
+{% extends "blog/base.html" %}
+
+{% block title %}
+Add Post
+{% endblock %}
+
+{% block body %}
+<h1>Добавить Пост</h1>
+<form enctype="multipart/form-data" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Сохранить">
+</form>
+{% endblock %}

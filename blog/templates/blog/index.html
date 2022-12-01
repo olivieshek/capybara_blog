@@ -6,7 +6,7 @@ Blog Site
 {% endblock %}
 
 {% block body %}
-<h1 class="blog-title">Vessel Blog</h1>
+<h1 class="blog-title">Capybara Blog</h1>
 <section class="section section-posts">
 {% if posts %}
     {% for post in posts %}
@@ -19,7 +19,7 @@ Blog Site
                 {{ post.body }}
             </p>
             <p class="post-datetime">
-                {{ post.date }} ~ {{ post.time }}
+                {{ post.date }} ~ {{ post.time }} : {{ post.id }}
             </p>
         </article>
     {% endfor %}
@@ -27,4 +27,10 @@ Blog Site
     <p class="no-posts">На данный момент нет никаких публикаций.</p>
 {% endif %}
 </section>
+<a href="{% url 'blog:add_post' %}" class="add-post">
+    Добавить пост
+</a>
+<!--<a href="{% url 'blog:delete_post/{{ post.id }}' %}" class="delete-post">-->
+<!--    Удалить пост-->
+<!--</a>-->
 {% endblock %}
