@@ -10,4 +10,3 @@ class PostForm(forms.ModelForm):
             'data': forms.DateInput(attrs={'type': 'date'}),
             'time': forms.DateInput(attrs={'type': 'time'})
         }
-        

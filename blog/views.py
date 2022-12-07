@@ -7,6 +7,9 @@ from .forms import PostForm
 
 def index(request):
     posts = Post.objects.all().order_by("date", "time")
+    for i, p in enumerate(posts):
+        brief = p.body[:100]
+        posts[i].summary = brief + '...' if len(p.body) > len(brief) else brief
     return render(
         request,
         "blog/index.html",
@@ -40,7 +43,30 @@ def add_post(request):
             )
 
 
-def delete_post(request, id):
-    Post.objects.filter(id=id).delete(id)
-    return HttpResponseRedirect(reverse("blog:delete_post"))
+def read_post(request, id):
+    post = Post.objects.get(pk=id)
+    return render(
+        request,
+        'blog/single_post.html',
+        {
+            'post': post
+        }
+    )
 
+
+def edit_post(request, id):
+    post = Post.objects.get(pk=id)
+    form = PostForm(instance=post)
+    return render(
+        request,
+        'blog/edit_post.html',
+        {
+            'post': post,
+            'form': form
+        }
+    )
+
+
+def delete_post(request, id):
+    Post.objects.filter(pk=id).delete()
+    return HttpResponseRedirect(reverse("blog:index"))

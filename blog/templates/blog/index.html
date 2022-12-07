@@ -16,7 +16,7 @@ Blog Site
                 {{ post.title }}
             </h2>
             <p class="post-body">
-                {{ post.body }}
+                {{ post.summary }} <a href="read_post/{{ post.id }}">Читать далее</a>
             </p>
             <p class="post-datetime">
                 {{ post.date }} ~ {{ post.time }} : {{ post.id }}
@@ -30,7 +30,4 @@ Blog Site
 <a href="{% url 'blog:add_post' %}" class="add-post">
     Добавить пост
 </a>
-<!--<a href="{% url 'blog:delete_post/{{ post.id }}' %}" class="delete-post">-->
-<!--    Удалить пост-->
-<!--</a>-->
 {% endblock %}

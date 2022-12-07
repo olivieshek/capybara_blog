@@ -1,0 +1,16 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+
+{% block title %}
+{{ post.id }}-edit
+{% endblock %}
+
+{% block body %}
+<h1>Update "{{ post.title }}"</h1>
+
+<form action="{% url 'blog:edit_post' post.id %}" method="post">
+{% csrf_token %}
+{{ form.as_p }}
+<input type="submit" value="Сохранить">
+</form>
+{% endblock %}
