@@ -1,0 +1,16 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}
+Authorization
+{% endblock %}
+
+{% block body %}
+<h1>Авторизуйтесь и читайте наш блог!</h1>
+<form enctype="multipart/form-data" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Завершить">
+</form>
+{% endblock %}
+
+

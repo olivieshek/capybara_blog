@@ -1,5 +1,6 @@
 from datetime import datetime
 from django.db import models
+from django.contrib.auth.models import User
 
 
 # TODO default datetime
@@ -10,6 +11,14 @@ class Post(models.Model):
     image = models.ImageField(upload_to="blog/images/", default="", verbose_name="Фотография к посту")
     date = models.DateField(verbose_name="Дата публикации", default=datetime.now)
     time = models.TimeField(verbose_name="Время публикации")
+    author = models.ForeignKey(
+        User,
+        verbose_name="User",
+        related_name="posts",
+        on_delete=models.CASCADE,
+        default=123
+    )
 
     def __str__(self):
         return f'''"{self.title}" --- {self.date}'''
+

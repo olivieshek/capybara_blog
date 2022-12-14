@@ -7,8 +7,11 @@
 
 {% block body %}
 <h1 class="post-title">{{ post.title }}</h1>
+<p class="author">- {{ post.author }} -</p>
 <p class="post-body">{{ post.body }}</p>
 <p class="post-datetime">{{ post.date }} ~ {{ post.time }} : {{ post.id }}</p>
+{% if user.is_authenticated %}
 <a class="edit-post" href="{% url 'blog:edit_post' post.id %}">Редактировать пост</a>
 <a class="delete-post" href="{% url 'blog:delete_post' post.id %}">Удалить пост</a>
+{% endif %}
 {% endblock %}

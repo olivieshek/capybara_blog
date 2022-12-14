@@ -11,5 +11,7 @@
 </head>
 <body>
     {% block body %}{% endblock %}
+    <p><a href="{% url 'blog:index' %}">Вернуться назад</a></p>
+    <p><a href="{% url 'blog:logout' %}">Выйти из профиля</a></p>
 </body>
 </html>

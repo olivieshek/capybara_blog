@@ -7,8 +7,11 @@ Blog Site
 
 {% block body %}
 <h1 class="blog-title">Capybara Blog</h1>
+{% if request.user.is_authenticated %}
+<p>Добро пожаловать, {{ user.username }}!</p>
+{% endif %}
 <section class="section section-posts">
-{% if posts %}
+    {% if posts %}
     {% for post in posts %}
         <article class="post-container">
             <img class="post-image" src="{% get_media_prefix %}{{ post.image }}" alt="нет изображения">
@@ -29,5 +32,8 @@ Blog Site
 </section>
 <a href="{% url 'blog:add_post' %}" class="add-post">
     Добавить пост
+</a>
+<a href="{% url 'blog:authorization' %}" class="authorization">
+    Авторизоваться
 </a>
 {% endblock %}
