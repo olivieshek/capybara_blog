@@ -3,6 +3,13 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
+# class AuthorUser(User):
+#     user = models.OneToOneField(User, on_delete=models.CASCADE)
+#
+#     def __str__(self):
+#         return self.user.username
+
+
 # TODO default datetime
 class Post(models.Model):
     title = models.CharField(max_length=100, verbose_name="Заголовок")
@@ -21,4 +28,3 @@ class Post(models.Model):
 
     def __str__(self):
         return f'''"{self.title}" --- {self.date}'''
-
