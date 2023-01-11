@@ -1,0 +1,38 @@
+{% extends "blog/base.html" %}
+
+{% block body %}
+
+{% if form.errors %}
+<p>Пользователя с такими данными не существует. Попробуйте снова.</p>
+{% endif %}
+
+{% if next %}
+    {% if user.is_authenticated %}
+    <p>У Вас нет допуска к данной странице. Чтобы продолжить,
+    пожалуйста, войдите в аккаунт, у которого есть доступ.</p>
+    {% else %}
+    <p>Зарегистрируйтесь или войдите в существующий аккаунт, чтобы смотреть эту страницу.</p>
+    {% endif %}
+{% endif %}
+
+<form method="post" action="{% url 'blog:login' %}">
+{% csrf_token %}
+<table>
+<tr>
+    <td>{{ form.username.label_tag }}</td>
+    <td>{{ form.username }}</td>
+</tr>
+<tr>
+    <td>{{ form.password.label_tag }}</td>
+    <td>{{ form.password }}</td>
+</tr>
+</table>
+
+<input type="submit" value="Войти">
+<input type="hidden" name="Далее" value="{{ next }}">
+</form>
+
+{# Assumes you set up the password_reset view in your URLconf #}
+{# <p><a href="{% url 'password_reset' %}">Забыли пароль?</a></p> #}
+
+{% endblock %}

@@ -1,14 +1,30 @@
 import os
+from django.utils import timezone  # время для постов
+from django.urls import reverse, reverse_lazy  # реверсы для переходов между страницами
+from django.views.generic import ListView, CreateView, DeleteView, UpdateView, DetailView  # дженерик формы
 from django.conf import settings
 from django.shortcuts import render
-from django.utils import timezone
-from django.urls import reverse, reverse_lazy
 from django.http import HttpResponseRedirect, HttpResponse
-# from django.contrib.auth import authenticate, login
-# from django.contrib.auth.views import auth_logout
-from django.views.generic import ListView, CreateView, DeleteView, UpdateView, DetailView
 from .models import Post
-from .forms import PostForm, AuthenticateForm
+from .forms import PostForm, AuthenticateForm, CustomUserCreationForm
+
+
+# TODO входить в аккаунт сразу после регистрации автоматически
+def sign_up(request):
+    if request.method == "POST":
+        if request.method == "POST":
+            form = CustomUserCreationForm(data=request.POST)
+            if form.is_valid():
+                form.save()
+                return HttpResponseRedirect(reverse("blog:index"))
+            else:
+                print("invalid password or login")
+    form = CustomUserCreationForm()
+    return render(
+        request,
+        "registration/sign_up.html",
+        {"form": form}
+    )
 
 
 class PostListView(ListView):
@@ -19,7 +35,7 @@ class PostListView(ListView):
 class PostCreateView(CreateView):
     # create post
     model = Post
-    fields = "__all__"
+    fields = "__all__"  # обязательно либо все, либо списком
     success_url = reverse_lazy("blog:index")
 
 
