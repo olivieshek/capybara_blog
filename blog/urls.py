@@ -13,5 +13,7 @@ urlpatterns = [
     path("edit_post/<int:pk>", views.PostUpdateView.as_view(), name="edit_post"),
     path("accounts/login/", auth_views.LoginView.as_view(), name="login"),  # пишем .as_view потому что это просто класс
     path("accounts/logout/", auth_views.LogoutView.as_view(next_page=reverse_lazy('blog:index')), name="logout"),
-    path("accounts/sign_up/", views.sign_up, name="sign_up")
+    path("accounts/sign_up/", views.sign_up, name="sign_up"),
+    path("categories/", views.ModelCategoryListView.as_view(), name="categories"),
+    path("category/<slug:slug>", views.list_posts_by_category, name="category")
 ]

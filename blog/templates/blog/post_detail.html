@@ -7,6 +7,9 @@
 
 {% block body %}
 <h1 class="post-title">{{ post.title }}</h1>
+{% if post.category %}
+<a href="{% url 'category' post.slug %}"></a>
+{% endif %}
 <p class="author">- {{ post.author }} -</p>
 <p class="post-body">{{ post.body }}</p>
 <p class="post-datetime">{{ post.date }} ~ {{ post.time }} : {{ post.id }}</p>

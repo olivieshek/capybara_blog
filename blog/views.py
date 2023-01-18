@@ -3,9 +3,9 @@ from django.utils import timezone  # время для постов
 from django.urls import reverse, reverse_lazy  # реверсы для переходов между страницами
 from django.views.generic import ListView, CreateView, DeleteView, UpdateView, DetailView  # дженерик формы
 from django.conf import settings
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse
-from .models import Post
+from .models import Post, ModelCategory
 from .forms import PostForm, AuthenticateForm, CustomUserCreationForm
 
 
@@ -61,6 +61,23 @@ class PostDeleteView(DeleteView):
     # delete post
     model = Post
     success_url = reverse_lazy("blog:index")
+
+
+class ModelCategoryListView(ListView):
+    model = ModelCategory
+
+
+def list_posts_by_category(request, slug):
+    category = get_object_or_404(ModelCategory, slug=slug)
+    posts = Post.objects.filter(category=category)
+    return render(
+        request,
+        "category_posts.html",
+        {
+            "category_name": category.name,
+            "post": posts
+        }
+    )
 
 
 # def authorization(request):
