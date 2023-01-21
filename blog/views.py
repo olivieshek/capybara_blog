@@ -1,7 +1,7 @@
 import os
 from django.utils import timezone  # время для постов
 from django.urls import reverse, reverse_lazy  # реверсы для переходов между страницами
-from django.views.generic import ListView, CreateView, DeleteView, UpdateView, DetailView  # дженерик формы
+import django.views.generic as generic
 from django.conf import settings
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse
@@ -27,19 +27,19 @@ def sign_up(request):
     )
 
 
-class PostListView(ListView):
+class PostListView(generic.ListView):
     # all posts
     model = Post
 
 
-class PostCreateView(CreateView):
+class PostCreateView(generic.CreateView):
     # create post
     model = Post
     fields = "__all__"  # обязательно либо все, либо списком
     success_url = reverse_lazy("blog:index")
 
 
-class PostDetailView(DetailView):
+class PostDetailView(generic.DetailView):
     # read single post
     model = Post
 
@@ -49,7 +49,7 @@ class PostDetailView(DetailView):
         return context
 
 
-class PostUpdateView(UpdateView):
+class PostUpdateView(generic.UpdateView):
     # edit post
     model = Post
     fields = "__all__"
@@ -57,27 +57,20 @@ class PostUpdateView(UpdateView):
     template_name_suffix = "_update_form"
 
 
-class PostDeleteView(DeleteView):
+class PostDeleteView(generic.DeleteView):
     # delete post
     model = Post
     success_url = reverse_lazy("blog:index")
 
 
-class ModelCategoryListView(ListView):
+class ModelCategoryDetailView(generic.DetailView):
     model = ModelCategory
+    template_name = 'blog/modelcategory_detail.html'
 
 
-def list_posts_by_category(request, slug):
-    category = get_object_or_404(ModelCategory, slug=slug)
-    posts = Post.objects.filter(category=category)
-    return render(
-        request,
-        "category_posts.html",
-        {
-            "category_name": category.name,
-            "post": posts
-        }
-    )
+class ModelCategoryListView(generic.ListView):
+    model = ModelCategory
+    template_name = 'modelcategory_list.html'
 
 
 # def authorization(request):

@@ -15,5 +15,5 @@ urlpatterns = [
     path("accounts/logout/", auth_views.LogoutView.as_view(next_page=reverse_lazy('blog:index')), name="logout"),
     path("accounts/sign_up/", views.sign_up, name="sign_up"),
     path("categories/", views.ModelCategoryListView.as_view(), name="categories"),
-    path("category/<slug:slug>", views.list_posts_by_category, name="category")
+    path("category/<int:pk>", views.ModelCategoryDetailView.as_view(), name="category")
 ]

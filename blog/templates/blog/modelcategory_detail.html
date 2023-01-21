@@ -1,0 +1,12 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}
+Category {{ category.name }}
+{% endblock %}
+
+{% block body %}
+<h1>Категория {{ modelcategory.name }}</h1>
+{% for post in modelcategory.cat_posts.all %}
+    <a href="{% url 'blog:read_post' post.id %}">{{ post.title }}</a>
+{% endfor %}
+{% endblock %}

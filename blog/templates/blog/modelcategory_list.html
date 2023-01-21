@@ -5,12 +5,19 @@ Categories
 {% endblock %}
 
 {% block body %}
-<h1 class="blog-title">Категории</h1>
 <section class="section-wrapper">
-    <h2 class="blog-title">Все посты категории</h2>
-    {% for category in object_list %}
-    <a href="{% url 'blog:category' post.category.slug %}">{{ category }}</a><br>
-    {% endfor %}
+    <h2 class="blog-title">Все категории</h2>
+    <ul>
+        {% for category in object_list %}
+            <li>
+                <a href="{% url 'blog:category' category.id %}">{{ category.name }}</a>
+                {% for post in category.cat_posts.all %}
+                    <ul>
+                        <a href="{% url 'blog:read_post' post.id %}">{{ post.title }}</a>
+                    </ul>
+                {% endfor %}
+            </li>
+        {% endfor %}
+    </ul>
 </section>
-<br>
 {% endblock %}

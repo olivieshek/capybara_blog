@@ -13,6 +13,7 @@
     <div class="page-container">
         {% include "blog/menu.html" %}
         {% block body %}{% endblock %}
+        <br>
         <p><a href="{% url 'blog:index' %}">Вернуться назад</a></p>
     </div>
 </body>

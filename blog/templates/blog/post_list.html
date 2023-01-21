@@ -27,6 +27,10 @@ Blog Site
     <p class="no-posts">На данный момент нет никаких публикаций.</p>
 {% endif %}
 </section>
+<a href="{% url 'blog:categories' %}">
+    Посмотреть все категории
+</a>
+<br>
 <a href="{% url 'blog:add_post' %}" class="add-post">
     Добавить пост
 </a>
