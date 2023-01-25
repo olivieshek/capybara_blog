@@ -10,6 +10,14 @@
 {% if post.category %}
     <a href="{% url 'blog:category' post.category.id %}">- Категория: {{ post.category }} -</a>
 {% endif %}
+
+{% if post.likes.post_likes %}
+    {% for like in post.likes.post_likes.all %}
+        <p>Лайк: {{ like.user }}</p>
+    {% endfor %}
+{% else %}
+    <p>Эту запись пока никто не лайкнул.</p>
+{% endif %}
 <br>
 <p class="author">- Автор поста: {{ post.author }} -</p>
 <p class="post-body">{{ post.body }}</p>

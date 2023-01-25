@@ -4,17 +4,8 @@ from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
 
 
-# class AuthorUser(User):
-#     user = models.OneToOneField(User, on_delete=models.CASCADE)
-#
-#     def __str__(self):
-#         return self.user.username
-
-
 class ModelCategory(models.Model):
     name = models.CharField(max_length=40, verbose_name="Название категории", unique=True)
-
-    # name = models.CharField(max_length=100)
 
     class Meta:
         ordering = ('name',)
@@ -52,9 +43,26 @@ class Post(models.Model):
         blank=True,
         null=True
     )
+    likes = models.ManyToManyField(
+        to=User,
+        related_name="post_likes",
+        verbose_name="Лайкнуть",
+        null=True
+    )
 
     def __str__(self):
         return f'''"{self.title}" --- {self.date}'''
 
 
+class Like(models.Model):
+    user = models.ForeignKey(
+        to=User,
+        on_delete=models.CASCADE
+    )
+    post = models.ForeignKey(
+        to=Post,
+        on_delete=models.CASCADE
+    )
 
+    def __str__(self):
+        return f"Пользователю {self.user} понравился пост {self.post}"
