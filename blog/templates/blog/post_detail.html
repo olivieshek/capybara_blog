@@ -11,19 +11,29 @@
     <a href="{% url 'blog:category' post.category.id %}">- Категория: {{ post.category }} -</a>
 {% endif %}
 
-{% if post.likes.post_likes %}
-    {% for like in post.likes.post_likes.all %}
-        <p>Лайк: {{ like.user }}</p>
+{% if post.likes.all %}
+<br>
+<p>Лайки: {{ post.likes.count }}</p>
+<ul>
+    {% for user in post.likes.all %}
+    <li>
+        {{ user }}
+    </li>
     {% endfor %}
+</ul>
 {% else %}
-    <p>Эту запись пока никто не лайкнул.</p>
+<p>Никто не лайкнул</p>
 {% endif %}
 <br>
 <p class="author">- Автор поста: {{ post.author }} -</p>
 <p class="post-body">{{ post.body }}</p>
 <p class="post-datetime">{{ post.date }} ~ {{ post.time }} : {{ post.id }}</p>
 {% if user.is_authenticated %}
+{% if user == post.author %}
 <a class="edit-post" href="{% url 'blog:edit_post' post.id %}">Редактировать пост</a>
 <a class="delete-post" href="{% url 'blog:delete_post' post.id %}">Удалить пост</a>
+{% endif %}
+<br>
+<a href="{% url 'blog:like_post' post.id %}">Лайкнуть пост</a>
 {% endif %}
 {% endblock %}

@@ -18,7 +18,11 @@ class ModelCategory(models.Model):
 # TODO default datetime
 class Post(models.Model):
     title = models.CharField(max_length=100, verbose_name="Заголовок")
-    body = models.TextField(max_length=1000, verbose_name="Основной текст")
+    body = models.TextField(
+        max_length=1000,
+        verbose_name="Основной текст",
+        blank=True
+    )
     summary = ''
     image = models.ImageField(
         upload_to="blog/images/",
@@ -45,9 +49,10 @@ class Post(models.Model):
     )
     likes = models.ManyToManyField(
         to=User,
-        related_name="post_likes",
+        through="Like",
+        related_name="likes",
         verbose_name="Лайкнуть",
-        null=True
+        blank=True
     )
 
     def __str__(self):

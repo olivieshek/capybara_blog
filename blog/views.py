@@ -1,6 +1,7 @@
 import os
 from django.utils import timezone  # время для постов
 from django.urls import reverse, reverse_lazy  # реверсы для переходов между страницами
+from django.contrib.auth.decorators import login_required
 import django.views.generic as generic
 from django.conf import settings
 from django.shortcuts import render, get_object_or_404
@@ -46,6 +47,7 @@ class PostDetailView(generic.DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['now'] = timezone.now()
+        context['likes'] = 'like'
         return context
 
 
@@ -73,30 +75,9 @@ class ModelCategoryListView(generic.ListView):
     template_name = 'modelcategory_list.html'
 
 
-# def authorization(request):
-#     if request.method == "POST":
-#         form = AuthenticateForm(request, data=request.POST)
-#         if form.is_valid():
-#             username = form.cleaned_data.get('username')
-#             password = form.cleaned_data.get('password')
-#             user = authenticate(username=username, password=password)
-#             if user is not None:
-#                 login(request, user)
-#             else:
-#                 print('ERROR')
-#             return HttpResponseRedirect(reverse("blog:index"))
-#         else:
-#             print("invalid password or login")
-#     form = AuthenticateForm()
-#     return render(
-#         request,
-#         "blog/login.html",
-#         {
-#             "form": form
-#         }
-#     )
-
-
-# def logout(request):
-#     auth_logout(request)
-#     return HttpResponseRedirect(reverse('blog:index'))
+@login_required(redirect_field_name='blog:index')
+def LikePost(request, pk):
+    post = Post.objects.get(id=pk)
+    user = request.user
+    post.likes.add(request.user)
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
