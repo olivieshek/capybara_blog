@@ -10,13 +10,16 @@ from .models import Post, ModelCategory
 from .forms import PostForm, AuthenticateForm, CustomUserCreationForm
 
 
-# TODO входить в аккаунт сразу после регистрации автоматически
 def sign_up(request):
     if request.method == "POST":
         if request.method == "POST":
             form = CustomUserCreationForm(data=request.POST)
             if form.is_valid():
                 form.save()
+                username = form.cleaned_data['username']
+                password = form.cleaned_data['password1']
+                user = authenticate(username=username, password=password)
+                login(request, user)
                 return HttpResponseRedirect(reverse("blog:index"))
             else:
                 print("invalid password or login")
