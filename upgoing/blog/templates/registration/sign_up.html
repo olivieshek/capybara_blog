@@ -1,0 +1,14 @@
+{% extends "blog/base.html" %}
+
+{% block title %}
+Sign Up
+{% endblock %}
+
+{% block body %}
+{% csrf_token %}
+<form enctype="multipart/form-data" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Зарегистрироваться">
+</form>
+{% endblock %}

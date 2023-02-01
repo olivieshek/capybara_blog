@@ -1,0 +1,23 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}
+Categories
+{% endblock %}
+
+{% block body %}
+<section class="section-wrapper">
+    <h2 class="blog-title">Все категории</h2>
+    <ul>
+        {% for category in object_list %}
+            <li>
+                <a href="{% url 'blog:category' category.id %}">{{ category.name }}</a>
+                {% for post in category.cat_posts.all %}
+                    <ul>
+                        <a href="{% url 'blog:read_post' post.id %}">{{ post.title }}</a>
+                    </ul>
+                {% endfor %}
+            </li>
+        {% endfor %}
+    </ul>
+</section>
+{% endblock %}

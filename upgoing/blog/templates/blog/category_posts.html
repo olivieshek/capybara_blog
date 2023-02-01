@@ -1,0 +1,15 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}
+Posts by category
+{% endblock %}
+
+{% block body %}
+<h1 class="blog-title">Посты по категории</h1>
+<h2 class="blog-title">Посты</h2>
+{% if category_name %}
+<h1>Category: {{category_name}}</h1>
+{% else %}
+<h1>All Posts</h1>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends "blog/base.html" %}
+{% load static %}
+
+{% block title %}
+Blog Site
+{% endblock %}
+
+{% block body %}
+<h1 class="blog-title">Capybara Blog</h1>
+<section class="section section-posts">
+    {% if object_list %}
+    {% for post in object_list %}
+        <article class="post-container">
+            <img class="post-image" src="{% get_media_prefix %}{{ post.image }}" alt="нет изображения">
+            <h2 class="post-title">
+                {{ post.title }}
+            </h2>
+            <p class="post-body">
+                {{ post.summary }} <a href="read_post/{{ post.id }}">Читать далее</a>
+            </p>
+            <p class="post-datetime">
+                {{ post.date }} ~ {{ post.time }} : {{ post.id }}
+            </p>
+        </article>
+    {% endfor %}
+{% else %}
+    <p class="no-posts">На данный момент нет никаких публикаций.</p>
+{% endif %}
+</section>
+<a href="{% url 'blog:categories' %}">
+    Посмотреть все категории
+</a>
+<br>
+<a href="{% url 'blog:add_post' %}" class="add-post">
+    Добавить пост
+</a>
+{% endblock %}

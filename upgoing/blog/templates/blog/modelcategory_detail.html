@@ -1,0 +1,17 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}
+Category {{ category.name }}
+{% endblock %}
+
+{% block body %}
+<h1>Категория {{ modelcategory.name }}</h1>
+{% if modelcategory.cat_posts.all %}
+    {% for post in modelcategory.cat_posts.all %}
+        <a href="{% url 'blog:read_post' post.id %}">{{ post.title }}</a>
+    {% endfor %}
+{% else %}
+    <p>Нет постов в данной категории. Вы можете посмотреть другие публикации:</p>
+    <a href="{% url 'blog:index' %}">посмотреть...</a>
+{% endif %}
+{% endblock %}

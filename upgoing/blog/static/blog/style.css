@@ -1,0 +1,52 @@
+* {
+    margin: 0;
+}
+
+body {
+    background-color: #d0d0ce;
+}
+
+.blog-title {
+    text-align: center;
+    padding: 0.5em;
+}
+
+.section {
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+.section-posts {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    background-color: #DCF4DA;
+    padding: 1em;
+}
+
+.post-container {
+    flex: 1;
+}
+
+.post-image {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+.post-title {
+    margin-bottom: 15px;
+}
+
+.post-body {
+    margin-bottom: 25px;
+}
+
+.post-datetime {
+    font-style: italic;
+}
+
+.add-post {
+    text-align: center;
+    text-size: 200px;
+}
