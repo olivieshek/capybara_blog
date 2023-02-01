@@ -8,6 +8,6 @@ packages = list()
 for i, dist in enumerate(content):
     packages.append(re.match(r'\w+', dist).group())
 
-call('pip3 install --upgrade' + ' ' + ' '.join(packages), shell=True)
+call('pip3 install --upgrade ' + ' '.join(packages), shell=True)
 
 
