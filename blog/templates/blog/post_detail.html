@@ -7,23 +7,13 @@
 
 {% block body %}
 <h1 class="post-title">{{ post.title }}</h1>
-{% if post.category %}
-    <a href="{% url 'blog:category' post.category.id %}">- Категория: {{ post.category }} -</a>
-{% endif %}
-
-{% if post.likes.all %}
-<br>
-<p>Лайки: {{ post.likes.count }}</p>
-<ul>
-    {% for user in post.likes.all %}
-    <li>
-        {{ user }}
-    </li>
+<p>Category: {{ object.category.title }}</p>
+<p>Likes: {{ object.likes.count }}</p>
+<p>Liked by:
+    {% for like in object.likes.all %}
+        {{ like.user.username }}{% if not forloop.last %}, {% endif %}
     {% endfor %}
-</ul>
-{% else %}
-<p>Никто не лайкнул</p>
-{% endif %}
+</p>
 <br>
 <p class="author">- Автор поста: {{ post.author }} -</p>
 <p class="post-body">{{ post.body }}</p>
@@ -34,6 +24,10 @@
 <a class="delete-post" href="{% url 'blog:delete_post' post.id %}">Удалить пост</a>
 {% endif %}
 <br>
-<a href="{% url 'blog:like_post' post.id %}">Лайкнуть пост</a>
+{% if request.user in object.likes.all %}
+    <a href="{% url 'blog:remove_like' object.pk %}">Dislike</a>
+{% else %}
+    <a href="{% url 'blog:add_like' object.pk %}">Like</a>
+{% endif %}
 {% endif %}
 {% endblock %}

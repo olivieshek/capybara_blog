@@ -1,5 +1,5 @@
 from django import forms
-from .models import Post, ModelCategory
+from .models import Post, Category
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User

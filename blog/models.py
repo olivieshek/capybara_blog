@@ -1,10 +1,9 @@
 from datetime import datetime
 from django.db import models
-from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
 
 
-class ModelCategory(models.Model):
+class Category(models.Model):
     name = models.CharField(max_length=40, verbose_name="Название категории", unique=True)
 
     class Meta:
@@ -31,7 +30,7 @@ class Post(models.Model):
         blank=True
     )
     date = models.DateField(verbose_name="Дата публикации", default=datetime.now)
-    time = models.TimeField(verbose_name="Время публикации")
+    time = models.TimeField(verbose_name="Время публикации", null=True)
     author = models.ForeignKey(
         User,
         verbose_name="Автор",
@@ -40,7 +39,7 @@ class Post(models.Model):
         default=123
     )
     category = models.ForeignKey(
-        to=ModelCategory,
+        to=Category,
         verbose_name="Категория",
         related_name="cat_posts",
         on_delete=models.SET_NULL,
@@ -49,9 +48,7 @@ class Post(models.Model):
     )
     likes = models.ManyToManyField(
         to=User,
-        through="Like",
-        related_name="likes",
-        verbose_name="Лайкнуть",
+        through='Like',
         blank=True
     )
 
@@ -60,14 +57,8 @@ class Post(models.Model):
 
 
 class Like(models.Model):
-    user = models.ForeignKey(
-        to=User,
-        on_delete=models.CASCADE
-    )
-    post = models.ForeignKey(
-        to=Post,
-        on_delete=models.CASCADE
-    )
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
 
-    def __str__(self):
-        return f"Пользователю {self.user} понравился пост {self.post}"
+    class Meta:
+        unique_together = ('user', 'post')

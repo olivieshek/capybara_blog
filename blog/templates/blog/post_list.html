@@ -11,7 +11,9 @@ Blog Site
     {% if object_list %}
     {% for post in object_list %}
         <article class="post-container">
-            <img class="post-image" src="{% get_media_prefix %}{{ post.image }}" alt="нет изображения">
+            {% if post.image %}
+                <img class="post-image" src="{% get_media_prefix %}{{ post.image }}" alt="нет изображения">
+            {% endif %}
             <h2 class="post-title">
                 {{ post.title }}
             </h2>

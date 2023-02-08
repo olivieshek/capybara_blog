@@ -1,20 +1,21 @@
 from django.urls import path
 from django.urls import reverse_lazy
-from . import views
-from django.contrib.auth import views as auth_views  # аутентификация и авторизация пользователя
+from .views import *
+
 
 app_name = "blog"
 
 urlpatterns = [
-    path("", views.PostListView.as_view(), name="index"),
-    path("add_post/", views.PostCreateView.as_view(), name="add_post"),
-    path("read_post/<int:pk>", views.PostDetailView.as_view(), name="read_post"),
-    path("delete_post/<int:pk>", views.PostDeleteView.as_view(), name="delete_post"),
-    path("edit_post/<int:pk>", views.PostUpdateView.as_view(), name="edit_post"),
-    path("accounts/login/", auth_views.LoginView.as_view(), name="login"),  # пишем .as_view потому что это просто класс
-    path("accounts/logout/", auth_views.LogoutView.as_view(next_page=reverse_lazy('blog:index')), name="logout"),
-    path("accounts/sign_up/", views.sign_up, name="sign_up"),
-    path("categories/", views.ModelCategoryListView.as_view(), name="categories"),
-    path("category/<int:pk>", views.ModelCategoryDetailView.as_view(), name="category"),
-    path("like_post/<int:pk>", views.LikePost, name="like_post")
+    path("", PostListView.as_view(), name="index"),
+    path("add_post/", PostCreateView.as_view(), name="add_post"),
+    path("read_post/<int:pk>", PostDetailView.as_view(), name="read_post"),
+    path("delete_post/<int:pk>", PostDeleteView.as_view(), name="delete_post"),
+    path("edit_post/<int:pk>", PostUpdateView.as_view(), name="edit_post"),
+    path("accounts/login/", BlogLoginView.as_view(), name="login"),  # пишем .as_view потому что это просто класс
+    path("accounts/logout/", BlogLogoutView.as_view(), name="logout"),
+    path("accounts/sign_up/", sign_up, name="sign_up"),
+    path("categories/", CategoryListView.as_view(), name="categories"),
+    path("category/<int:pk>", CategoryDetailView.as_view(), name="category"),
+    path('posts/<int:post_id>/add_like/', add_like, name='add_like'),
+    path('posts/<int:post_id>/remove_like/', remove_like, name='remove_like')
 ]

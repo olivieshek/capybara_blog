@@ -10,6 +10,9 @@
     <title>{% block title %}{% endblock %}</title>
 </head>
 <body>
+    {% if user.is_authenticated and user.is_staff %}
+        <a href="{% url 'admin:index' %}">В АДМИНКУ</a>
+    {% endif %}
     <div class="page-container">
         {% include "blog/menu.html" %}
         {% block body %}{% endblock %}
