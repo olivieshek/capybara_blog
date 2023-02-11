@@ -6,8 +6,13 @@
 {% endblock %}
 
 {% block body %}
+
 <h1 class="post-title">{{ post.title }}</h1>
-<p>Category: {{ object.category.title }}</p>
+{% if post.category %}
+<p>Category:<a href="{% url 'blog:category' post.category.id %}">{{ post.category.title }}</a></p>
+{% else %}
+<p>Non-category post</p>
+{% endif %}
 <p>Likes: {{ object.likes.count }}</p>
 <p>Liked by:
     {% for like in object.likes.all %}
@@ -28,6 +33,7 @@
     <a href="{% url 'blog:remove_like' object.pk %}">Dislike</a>
 {% else %}
     <a href="{% url 'blog:add_like' object.pk %}">Like</a>
+
 {% endif %}
 {% endif %}
 {% endblock %}

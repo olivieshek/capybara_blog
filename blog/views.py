@@ -1,4 +1,5 @@
 import os
+from django.conf import settings
 from django.utils import timezone  # время для постов
 from django.urls import reverse, reverse_lazy  # реверсы для переходов между страницами
 from django.contrib.auth import views as av  # аутентификация и авторизация пользователя
@@ -25,10 +26,16 @@ class PostListView(ListView):
     model = Post
     paginate_by = 10
 
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['MEDIA_URL'] = settings.MEDIA_URL
+        return context
+
 
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
-    fields = ['title', 'body', 'category']
+    fields = ['title', 'body', 'category', 'image']
+    success_url = reverse_lazy("blog:index")
 
     def form_valid(self, form):
         form.instance.author = self.request.user
@@ -37,7 +44,7 @@ class PostCreateView(LoginRequiredMixin, CreateView):
 
 class PostUpdateView(LoginRequiredMixin, UpdateView):
     model = Post
-    fields = ['title', 'text', 'category']
+    fields = ['title', 'body', 'category']
     success_url = reverse_lazy("blog:index")
     template_name_suffix = "_update_form"
 
@@ -89,16 +96,16 @@ class CategoryListView(ListView):
     model = Category
 
 
-def add_like(request, pk):
-    post = get_object_or_404(Post, pk=pk)
+def add_like(request, post_id):
+    post = get_object_or_404(Post, pk=post_id)
     like = Like(user=request.user, post=post)
     like.save()
-    return redirect('post_detail', pk=pk)
+    return redirect('blog:post_detail', pk=post_id)
 
 
-def remove_like(request, pk):
-    post = get_objcect_or_404(Post, pk=pk)
+def remove_like(request, post_id):
+    post = get_object_or_404(Post, pk=post_id)
     like = Like.objects.get(user=request.user, post=post)
     like.delete()
-    return redirect('post_detail', pk=pk)
+    return redirect('blog:post_detail', pk=post_id)
 
