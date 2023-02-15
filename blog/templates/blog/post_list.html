@@ -1,23 +1,23 @@
 {% extends "blog/base.html" %}
 
 {% block title %}
-Blog Posts
+All Posts
 {% endblock %}
 
 {% block module %}
-All posts
+All Posts
 {% endblock %}
 
 {% block body %}
 <div class="posts-container">
 {% for post in object_list %}
     <article class="post-item">
-        <h2><a href="{% url 'blog:post_detail' post.pk %}">{{ post.title }}</a></h2>
+        <h3><a href="{% url 'blog:post_detail' post.pk %}">{{ post.title }}</a></h3>
         {% if post.image %}
-            <img class="post-image" src="{{ MEDIA_URL }}{{ post.image }}" alt="нет изображения">
+            <img class="post-image--thumb" src="{{ MEDIA_URL }}{{ post.image }}" alt="нет изображения">
         {% endif %}
         <p class="post-body">
-            {{ post.summary }}
+            {{ post.body|slice:":200" }}
         </p>
         <p class="post-datetime">
             {{ post.date }} ~ {{ post.time }} : {{ post.id }}
@@ -27,7 +27,4 @@ All posts
     <span>На данный момент нет никаких публикаций.</span>
 {% endfor %}
 </div>
-<a href="{% url 'blog:categories' %}">
-    Посмотреть все категории
-</a>
 {% endblock %}

@@ -1,6 +1,5 @@
 {% load static %}
-
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
@@ -8,20 +7,15 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'blog/style.css' %}">
 </head>
 <body>
-{% if user.is_authenticated and user.is_staff %}
-<a href="{% url 'admin:index' %}">Перейти в админку...</a>
-{% endif %}
-<div class="auth-info">
-    {% include 'blog/menu.html' %}
+<div class="page-container">
+    {% include 'blog/header.html' %}
+    <h1 class="blog-title">Capybara Blog</h1>
+    <h2 class="blog-module">{% block module %}{% endblock %}</h2>
+    {% block body %}{% endblock %}
+    {% include 'blog/navigation.html' %}
 </div>
-<h1 class="blog-title">Capybara Blog</h1>
-<h2 class="blog-module">{% block module %}{% endblock %}</h2>
-{% block body %}{% endblock %}
 </body>
-<div class="navigation">
-    <a href="{% url 'blog:add_post' %}">Создать публикацию</a> <br>
-    <a href="{% url 'blog:index' %}">Вернуться на главную страницу</a>
-</div>
 </html>
