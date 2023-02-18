@@ -6,34 +6,41 @@
 {% endblock %}
 
 {% block body %}
-
-<h1 class="post-title">{{ post.title }}</h1>
-{% if post.category %}
-<p>Category:<a href="{% url 'blog:category' post.category.id %}">{{ post.category.title }}</a></p>
-{% else %}
-<p>Non-category post</p>
-{% endif %}
-<p>Likes: {{ object.likes.count }}</p>
-<p>Liked by:
-    {% for like in object.likes.all %}
-        {{ like.user.username }}{% if not forloop.last %}, {% endif %}
-    {% endfor %}
-</p>
-<br>
-<p class="author">- Автор поста: {{ post.author }} -</p>
-<p class="post-body">{{ post.body }}</p>
-<p class="post-datetime">{{ post.date }} ~ {{ post.time }} : {{ post.id }}</p>
-{% if user.is_authenticated %}
-{% if user == post.author %}
-<a class="edit-post" href="{% url 'blog:edit_post' post.id %}">Редактировать пост</a>
-<a class="delete-post" href="{% url 'blog:delete_post' post.id %}">Удалить пост</a>
-{% endif %}
-<br>
-{% if request.user in object.likes.all %}
+<div class="post-detail">
+    <div class="post-title">
+        <h1>{{ post.title }}</h1>
+        <div class="post-info">
+            {% if post.category %}
+                <p>- Category:<a href="{% url 'blog:category' post.category.id %}">{{ post.category.title }} -</a></p>
+            {% else %}
+                <p>- Non-category post -</p>
+            {% endif %}
+            <p class="author">- Автор поста: {{ post.author }} -</p>
+        </div>
+    </div>
+    <div class="post-content">
+        <p class="post-body">{{ post.body }}</p>
+        <img class="post-image" src="{{ MEDIA_URL }}{{ post.image }}" alt="нет изображения">
+    </div>
+    <p class="post-datetime">{{ post.date }} ~ {{ post.time }} : {{ post.id }}</p>
+    {% if user.is_authenticated %}
+    {% if user == post.author %}
+    <a class="edit-post" href="{% url 'blog:edit_post' post.id %}">Редактировать пост</a>
+    <a class="delete-post" href="{% url 'blog:delete_post' post.id %}">Удалить пост</a>
+    {% endif %}
+    <br>
+    {% if request.user in object.likes.all %}
     <a href="{% url 'blog:remove_like' object.pk %}">Dislike</a>
-{% else %}
+    {% else %}
     <a href="{% url 'blog:add_like' object.pk %}">Like</a>
 
-{% endif %}
-{% endif %}
-{% endblock %}
+    {% endif %}
+    {% endif %}
+    <p>Likes: {{ object.likes.count }}</p>
+    <p>Liked by:
+        {% for like in object.likes.all %}
+        {{ like.user.username }}{% if not forloop.last %}, {% endif %}
+        {% endfor %}
+        {% endblock %}
+</div>
+</p>

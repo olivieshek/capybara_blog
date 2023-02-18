@@ -11,11 +11,16 @@
 </head>
 <body>
 <div class="page-container">
-    {% include 'blog/header.html' %}
-    <h1 class="blog-title">Capybara Blog</h1>
-    <h2 class="blog-module">{% block module %}{% endblock %}</h2>
-    {% block body %}{% endblock %}
-    {% include 'blog/navigation.html' %}
+    <div class="container header-container">
+        {% include 'blog/header.html' %}
+    </div>
+    <div class="main">
+        <h2 class="blog-module">{% block module %}{% endblock %}</h2>
+        {% block body %}{% endblock %}
+    </div>
+    <div class="container footer-container">
+        {% include 'blog/navigation.html' %}
+    </div>
 </div>
 </body>
 </html>

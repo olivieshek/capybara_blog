@@ -1,17 +1,18 @@
-<div class="header">
+{% load static %}
+<img class="header-logo" src="{% static 'blog/img/header-logo.svg' %}" alt="">
+<h1 class="header-title">Capybara Blog</h1>
+<div class="header-user">
     {% if user.is_authenticated and user.is_staff %}
         <a href="{% url 'admin:index' %}">Перейти в админку...</a>
     {% endif %}
 
     {% if user.is_authenticated %}
-        <p>Пользователь {{ user.username }} авторизован. </p>
+        <p>Привет, {{ user.username }}!</p>
         <a href="{% url 'blog:logout' %}">Выйти</a>
     {% else %}
-        <p>Пользователь не авторизован.</p>
         <a href="{% url 'blog:login' %}">Войти</a>
         <a href="{% url 'blog:sign_up' %}">Зарегистрироваться</a>
     {% endif %}
-
     {% if user.is_authenticated and user.is_staff %}
         <p>ID:{{ user.id }}, staff: {{ user.is_staff }}</p>
     {% endif %}

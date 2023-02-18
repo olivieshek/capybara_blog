@@ -1,5 +1,5 @@
-<div class="footer">
-    <a href="{% url 'blog:add_post' %}">Создать публикацию</a><br>
-    <a href="{% url 'blog:categories' %}">Посмотреть все категории</a><br>
-    <a href="{% url 'blog:index' %}">Вернуться на главную страницу</a>
-</div>
+<a href="{% url 'blog:index' %}">Вернуться на главную страницу</a>
+{% if user.is_authenticated %}
+    <a href="{% url 'blog:add_post' %}">Создать публикацию</a>
+{% endif %}
+<a href="{% url 'blog:categories' %}">Посмотреть все категории</a>
